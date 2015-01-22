@@ -17,7 +17,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     protected $_connection_params = array(
         'driver'=>'pdo_mysql',
         'host'=>'localhost',
-        'user'=>'datamonkey',
+        'user'=>'root',
         'password'=>'',
         'dbname'=>'datamonkey_test'
     );
