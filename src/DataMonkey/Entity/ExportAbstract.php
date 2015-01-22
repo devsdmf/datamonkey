@@ -4,19 +4,36 @@ namespace DataMonkey\Entity;
 
 use Devsdmf\Annotations\Reader as AnnotationReader;
 
+/**
+ * Class ExportAbstract
+ *
+ * @package DataMonkey\Entity
+ * @author Lucas Mendes de Freitas <devsdmf@gmail.com>
+ * @copyright Copyright 2010-2015 (c) devSDMF Software Development Inc.
+ */
 abstract class ExportAbstract implements ExportableEntity
 {
-
+    /**
+     * Mapping array with properties and database reference fields
+     * @var array
+     */
     private $_mapping = null;
 
+    /**
+     * The primary key of table defined by `pk` annotation
+     * @var string
+     */
     private $_primary_key = null;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getMapping($reverse = false, $reload = false)
     {
         if (is_null($this->_mapping) || $reload) {
             $this->_mapping = array();
-            $reflector      = new \ReflectionClass($this);
-            $reader         = new AnnotationReader();
+            $reflector = new \ReflectionClass($this);
+            $reader = new AnnotationReader();
 
             foreach ($reflector->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
                 $annotations = $reader->getPropertyAnnotations($property);
@@ -32,6 +49,9 @@ abstract class ExportAbstract implements ExportableEntity
         return ($reverse) ? array_flip($this->_mapping) : $this->_mapping;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPrimaryKey()
     {
         if (is_null($this->_primary_key)) {
@@ -41,6 +61,9 @@ abstract class ExportAbstract implements ExportableEntity
         return $this->_primary_key;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function exchangeArray(array $data, $mapping = false)
     {
         $reflector = new \ReflectionClass($this);
@@ -61,7 +84,7 @@ abstract class ExportAbstract implements ExportableEntity
         } else {
             // Using the object properties
             foreach ($data as $property => $value) {
-                if (property_exists($this,$property)) {
+                if (property_exists($this, $property)) {
                     $this->$property = $value;
                 }
             }
@@ -70,10 +93,13 @@ abstract class ExportAbstract implements ExportableEntity
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toArray()
     {
         $reflector = new \ReflectionClass($this);
-        $data      = array();
+        $data = array();
 
         foreach ($reflector->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             $data[$property->getName()] = $property->getValue($this);
@@ -82,6 +108,9 @@ abstract class ExportAbstract implements ExportableEntity
         return $data;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function export()
     {
         $export = array();
@@ -95,17 +124,25 @@ abstract class ExportAbstract implements ExportableEntity
         return $export;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function fromArray(array $data)
     {
         $class = get_called_class();
         $instance = new $class();
+
         return $instance->exchangeArray($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function factory(array $data)
     {
         $class = get_called_class();
         $instance = new $class();
-        return $instance->exchangeArray($data,true);
+
+        return $instance->exchangeArray($data, true);
     }
 }
