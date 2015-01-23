@@ -1,0 +1,16 @@
+extensions:
+    - php
+source:
+    - src
+destination: api-docs/
+exclude:
+	- docs/
+	- tests/
+	- vendor/
+title: DataMonkey
+baseUrl: https://devsdmf.github.io/datamonkey
+accessLevels:
+	- public
+	- protected
+	- private
+tree: true

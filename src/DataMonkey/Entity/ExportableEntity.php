@@ -14,8 +14,8 @@ interface ExportableEntity
     /**
      * Get entity mapping between object properties and database fields
      *
-     * @param bool $reverse
-     * @param bool $reload
+     * @param  bool  $reverse
+     * @param  bool  $reload
      * @return array
      */
     public function getMapping($reverse = false, $reload = false);
@@ -30,8 +30,8 @@ interface ExportableEntity
     /**
      * Persist an array inside the entity
      *
-     * @param array $data
-     * @param bool  $mapping
+     * @param  array            $data
+     * @param  bool             $mapping
      * @return ExportableEntity
      */
     public function exchangeArray(array $data, $mapping = false);
@@ -54,7 +54,7 @@ interface ExportableEntity
     /**
      * Build a entity instance persisting an array
      *
-     * @param array $data
+     * @param  array            $data
      * @return ExportableEntity
      */
     public static function fromArray(array $data);
@@ -62,7 +62,7 @@ interface ExportableEntity
     /**
      * Build a entity instance persisting an database parsed array
      *
-     * @param array $data
+     * @param  array            $data
      * @return ExportableEntity
      */
     public static function factory(array $data);

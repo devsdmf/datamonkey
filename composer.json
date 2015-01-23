@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "phpunit\/phpunit": "4.2.*",
-        "fabpot/php-cs-fixer": "0.5.*"
+        "fabpot/php-cs-fixer": "0.5.*",
+        "apigen/apigen": "~4.0"
     },
     "autoload": {
         "psr-0": {

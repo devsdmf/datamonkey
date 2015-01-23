@@ -14,7 +14,7 @@ abstract class AbstractFactory
     /**
      * Create an component object
      *
-     * @param mixed $options
+     * @param  mixed $options
      * @return mixed
      */
     abstract public function create($options = null);
