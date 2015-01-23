@@ -96,6 +96,11 @@ $repo->save($entity);
 
 Done!
 
+Documentation
+-------------
+
+Checkout the API documentation [here](https://devsdmf.github.io/datamonkey)
+
 Tests
 -----
 
