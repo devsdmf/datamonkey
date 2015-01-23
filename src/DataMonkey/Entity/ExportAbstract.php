@@ -39,10 +39,10 @@ abstract class ExportAbstract implements ExportableEntity
                 $annotations = $reader->getPropertyAnnotations($property);
 
                 $db_ref = (!is_null($annotations->db_ref)) ? $annotations->db_ref : $property->getName();
-                $this->_mapping[$property->getName()] = (string)$db_ref;
+                $this->_mapping[$property->getName()] = (string) $db_ref;
 
                 if (isset($annotations->pk))
-                    $this->_primary_key = (string)$db_ref;
+                    $this->_primary_key = (string) $db_ref;
             }
         }
 
