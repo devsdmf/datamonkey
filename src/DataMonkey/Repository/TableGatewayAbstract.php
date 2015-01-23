@@ -31,7 +31,7 @@ abstract class TableGatewayAbstract
     /**
      * The Constructor
      *
-     * @param Connection $connection
+     * @param  Connection          $connection
      * @throws ConnectionException
      */
     public function __construct(Connection &$connection)

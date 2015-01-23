@@ -23,10 +23,10 @@ interface RepositoryInterface
     /**
      * Fetch objects by a set of criteria
      *
-     * @param array   $criteria
-     * @param array   $orderBy
-     * @param integer $limit
-     * @param integer $offset
+     * @param  array                              $criteria
+     * @param  array                              $orderBy
+     * @param  integer                            $limit
+     * @param  integer                            $offset
      * @return \DataMonkey\Repository\ResultStack
      */
     public function fetchBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
@@ -34,7 +34,7 @@ interface RepositoryInterface
     /**
      * Fetch a single object by a set of criteria
      *
-     * @param array $criteria
+     * @param  array            $criteria
      * @return ExportableEntity
      */
     public function fetchOneBy(array $criteria);
@@ -42,7 +42,7 @@ interface RepositoryInterface
     /**
      * Persist an object in database
      *
-     * @param ExportableEntity $entity
+     * @param  ExportableEntity $entity
      * @return ExportableEntity
      */
     public function save(ExportableEntity &$entity);
@@ -50,7 +50,7 @@ interface RepositoryInterface
     /**
      * Delete an object from database (if exists)
      *
-     * @param ExportableEntity $entity
+     * @param  ExportableEntity $entity
      * @return boolean
      */
     public function delete(ExportableEntity &$entity);

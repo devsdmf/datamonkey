@@ -27,8 +27,8 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * The Constructor
      *
-     * @param Connection      $connection
-     * @param AbstractFactory $factory
+     * @param  Connection                         $connection
+     * @param  AbstractFactory                    $factory
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function __construct(Connection &$connection, AbstractFactory $factory)
