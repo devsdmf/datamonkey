@@ -1,5 +1,4 @@
-DataMonkey
-==========
+# ![logo](https://i.imgur.com/TYpSNO7.png) DataMonkey
 
 [![Build Status](https://travis-ci.org/devsdmf/datamonkey.svg?branch=master)](https://travis-ci.org/devsdmf/datamonkey)
 [![Latest Stable Version](https://poser.pugx.org/devsdmf/datamonkey/v/stable.svg)](https://packagist.org/packages/devsdmf/datamonkey)
