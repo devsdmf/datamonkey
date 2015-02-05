@@ -5,6 +5,7 @@ namespace DataMonkey\Repository;
 use DataMonkey\Entity\ExportableEntity;
 use DataMonkey\Entity\Factory\AbstractFactory;
 use DataMonkey\Repository\Exception\InvalidArgumentException;
+use DataMonkey\Repository\Exception\InvalidPrimaryKeyException;
 use DataMonkey\Repository\Exception\TransactionException;
 use Doctrine\DBAL\Connection;
 
@@ -124,9 +125,42 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
      */
     public function save(ExportableEntity &$entity)
     {
-        $export = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $export       = $entity->export();
+        $type         = 'insert';
+        $check        = false;
 
-        if (is_null($export[$entity->getPrimaryKey()])) {
+        foreach ($primary_keys as $primary_key) {
+            if ($primary_key['strategy'] == 'manual') {
+                if (is_null($export[$primary_key['key']])) {
+                    throw new InvalidPrimaryKeyException(sprintf('The primary key %s are using manual strategy, you must set an value to proceed.',$primary_key['key']));
+                } else {
+                    $check = true;
+                }
+            } elseif ($primary_key['strategy'] == 'auto' && $check == false && $type == 'insert') {
+                if (is_null($export[$primary_key['key']])) {
+                    $type = 'insert';
+                } else {
+                    $type = 'update';
+                }
+            }
+        }
+
+        if ($check) {
+            reset($primary_keys);
+            $criteria = array();
+
+            foreach ($primary_keys as $primary_key) {
+                if (!is_null($export[$primary_key['key']])) {
+                    $criteria[$primary_key['key']] = $export[$primary_key['key']];
+                }
+            }
+
+            $result = $this->fetchOneBy($criteria);
+            $type = (is_null($result)) ? 'insert' : 'update';
+        }
+
+        if ($type == 'insert') {
             # INSERT
             $fields = array();
             $data = array();
@@ -145,8 +179,10 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
             $result = $this->_connection->executeUpdate($query, $data);
 
             if ($result == 1) {
-                $id_entity = $this->_connection->lastInsertId();
-                $entity->exchangeArray(array($entity->getPrimaryKey() => $id_entity), true);
+                if (count($primary_keys) == 1) {
+                    $id_entity = $this->_connection->lastInsertId();
+                    $entity->exchangeArray(array($primary_keys[0]['key'] => $id_entity), true);
+                }
 
                 return $entity;
             } else {
@@ -161,11 +197,16 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
                 $fields[] = '`' . $field . '`=?';
                 $data[] = $value;
             }
-
             $field_string = implode(',', $fields);
-            $data[] = $export[$entity->getPrimaryKey()];
 
-            $query = 'UPDATE `' . $this->_name . '` SET ' . $field_string . ' WHERE `' . $entity->getPrimaryKey() . '`=?';
+            reset($primary_keys);
+            foreach ($primary_keys as $primary_key) {
+                $where[] = '`' . $primary_key['key'] . '`=?';
+                $data[] = $export[$primary_key['key']];
+            }
+            $where_string = implode(' AND ',$where);
+
+            $query = 'UPDATE `' . $this->_name . '` SET ' . $field_string . ' WHERE ' . $where_string;
 
             $result = $this->_connection->executeUpdate($query, $data);
             if ($result == 1) {
@@ -183,11 +224,19 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
      */
     public function delete(ExportableEntity &$entity)
     {
-        $export = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $export       = $entity->export();
+        $data         = array();
 
-        $query = 'DELETE FROM `' . $this->_name . '` WHERE `' . $entity->getPrimaryKey() . '`=?';
+        foreach ($primary_keys as $primary_key) {
+            $where[] = '`' . $primary_key['key'] . '`=?';
+            $data[] = $export[$primary_key['key']];
+        }
+        $where_string = implode(' AND ',$where);
 
-        $result = $this->_connection->executeUpdate($query, array($export[$entity->getPrimaryKey()]));
+        $query = 'DELETE FROM `' . $this->_name . '` WHERE ' . $where_string;
+
+        $result = $this->_connection->executeUpdate($query,$data);
 
         if ($result == 1) {
             return true;

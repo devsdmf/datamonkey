@@ -2,6 +2,8 @@
 
 namespace DataMonkey\Entity;
 
+use DataMonkey\Entity\Exception\InvalidEntityException;
+use DataMonkey\Entity\Exception\InvalidStrategyException;
 use Devsdmf\Annotations\Reader as AnnotationReader;
 
 /**
@@ -20,10 +22,10 @@ abstract class ExportAbstract implements ExportableEntity
     private $_mapping = null;
 
     /**
-     * The primary key of table defined by `pk` annotation
-     * @var string
+     * The primary keys of table defined by `pk` annotation
+     * @var array
      */
-    private $_primary_key = null;
+    private $_primary_keys = null;
 
     /**
      * {@inheritdoc}
@@ -32,6 +34,7 @@ abstract class ExportAbstract implements ExportableEntity
     {
         if (is_null($this->_mapping) || $reload) {
             $this->_mapping = array();
+            $this->_primary_keys = array();
             $reflector = new \ReflectionClass($this);
             $reader = new AnnotationReader();
 
@@ -41,8 +44,15 @@ abstract class ExportAbstract implements ExportableEntity
                 $db_ref = (!is_null($annotations->db_ref)) ? $annotations->db_ref : $property->getName();
                 $this->_mapping[$property->getName()] = (string) $db_ref;
 
-                if (isset($annotations->pk))
-                    $this->_primary_key = (string) $db_ref;
+                if (isset($annotations->pk)) {
+                    $key      = (string) $db_ref;
+                    $strategy = (isset($annotations->strategy)) ? (string) $annotations->strategy : 'auto';
+
+                    if ($strategy != 'auto' && $strategy != 'manual')
+                        throw new InvalidStrategyException(sprintf('The primary key strategy must be auto or manual'));
+
+                    $this->_primary_keys[] = array('key'=>$key,'strategy'=>$strategy);
+                }
             }
         }
 
@@ -52,13 +62,17 @@ abstract class ExportAbstract implements ExportableEntity
     /**
      * {@inheritdoc}
      */
-    public function getPrimaryKey()
+    public function getPrimaryKeys()
     {
-        if (is_null($this->_primary_key)) {
+        if (is_null($this->_primary_keys)) {
             $this->getMapping();
         }
 
-        return $this->_primary_key;
+        if (count($this->_primary_keys) == 0) {
+            throw new InvalidEntityException(sprintf('An entity must have an primary key'));
+        } else {
+            return $this->_primary_keys;
+        }
     }
 
     /**
