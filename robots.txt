@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://devsdmf.github.io/datamonkey/sitemap.xml
