@@ -25,7 +25,7 @@ class ExportableEntityTest extends \PHPUnit_Framework_TestCase
         'column2'=>'Test 2'
     );
 
-    protected $_primary_key = 'idtest_table';
+    protected $_primary_key = array(array('key'=>'idtest_table','strategy'=>'auto'));
 
     public function setUp()
     {
@@ -54,7 +54,7 @@ class ExportableEntityTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPrimaryKey()
     {
-        $this->assertEquals($this->_primary_key,$this->_entity->getPrimaryKey());
+        $this->assertEquals($this->_primary_key,$this->_entity->getPrimaryKeys());
     }
 
     public function testExchangeArray()

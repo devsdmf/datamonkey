@@ -23,9 +23,9 @@ interface ExportableEntity
     /**
      * Get the primary key field
      *
-     * @return string
+     * @return array
      */
-    public function getPrimaryKey();
+    public function getPrimaryKeys();
 
     /**
      * Persist an array inside the entity

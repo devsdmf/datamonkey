@@ -34,6 +34,7 @@ class MyEntity extends ExportAbstract implements ExportableEntity
     /**
      * @pk
      * @db_ref id_entity
+     * @strategy auto
      */
     public $id = null;
     
