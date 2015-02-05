@@ -11,6 +11,7 @@ class SampleEntity extends ExportAbstract implements ExportableEntity
     /**
      * @pk
      * @db_ref idtest_table
+     * @strategy auto
      */
     public $id = null;
 

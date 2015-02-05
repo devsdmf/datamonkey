@@ -4,12 +4,12 @@ namespace DataMonkey\Tests\Repository;
 
 use DataMonkey\Entity\ExportableEntity;
 use DataMonkey\Repository\Repository;
-use DataMonkey\Tests\Mocks\SampleEntity;
-use DataMonkey\Tests\Mocks\SampleFactory;
-use DataMonkey\Tests\Mocks\SampleRepository;
+use DataMonkey\Tests\Mocks\SampleEntity2;
+use DataMonkey\Tests\Mocks\SampleFactory2;
+use DataMonkey\Tests\Mocks\SampleRepository2;
 use Doctrine\DBAL\DriverManager;
 
-class RepositoryTest extends \PHPUnit_Framework_TestCase
+class Repository2Test extends \PHPUnit_Framework_TestCase
 {
 
     protected $_connection = null;
@@ -28,9 +28,9 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     protected $_entity = null;
 
     protected $_entity_data = array(
-        'id'=>null,
-        'column'=>'Test 1',
-        'random'=>'Test 2'
+        'key1'=>1,
+        'key2'=>2,
+        'column'=>'Test 2'
     );
 
     /**
@@ -41,19 +41,18 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_connection = DriverManager::getConnection($this->_connection_params);
-        $this->_entity = SampleEntity::fromArray($this->_entity_data);
-        $this->_repository = new SampleRepository($this->_connection, new SampleFactory());
+        $this->_entity = SampleEntity2::fromArray($this->_entity_data);
+        $this->_repository = new SampleRepository2($this->_connection, new SampleFactory2());
     }
 
     public function testInitialize()
     {
-        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleRepository',$this->_repository);
+        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleRepository2',$this->_repository);
     }
 
     public function testInsert()
     {
-        $this->_repository->save($this->_entity);
-        $this->assertNotNull($this->_entity->id);
+        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleEntity2',$this->_repository->save($this->_entity));
 
         return $this->_entity;
     }
@@ -68,39 +67,43 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testInsert
-     * @param SampleEntity $entity
+     * @param SampleEntity2 $entity
      */
     public function testFetchBy($entity)
     {
         $export       = $entity->export();
         $primary_keys = $entity->getPrimaryKeys();
-        $primary_key  = $primary_keys[0]['key'];
-        $value        = $export[$primary_key];
-        $criteria     = array($primary_key=>$value);
+        $criteria     = array();
+
+        foreach ($primary_keys as $primary_key) {
+            $criteria[$primary_key['key']] = $export[$primary_key['key']];
+        }
 
         $this->assertGreaterThan(0,count($this->_repository->fetchBy($criteria)));
     }
 
     /**
      * @depends testInsert
-     * @param SampleEntity $entity
+     * @param SampleEntity2 $entity
      */
     public function testFetchOneBy($entity)
     {
         $export       = $entity->export();
         $primary_keys = $entity->getPrimaryKeys();
-        $primary_key  = $primary_keys[0]['key'];
-        $value        = $export[$primary_key];
-        $criteria     = array($primary_key=>$value);
+        $criteria     = array();
+
+        foreach ($primary_keys as $primary_key) {
+            $criteria[$primary_key['key']] = $export[$primary_key['key']];
+        }
 
         $entity = $this->_repository->fetchOneBy($criteria);
 
-        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleEntity',$entity);
+        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleEntity2',$entity);
     }
 
     /**
      * @depends testInsert
-     * @param SampleEntity $entity
+     * @param SampleEntity2 $entity
      */
     public function testDelete($entity)
     {
