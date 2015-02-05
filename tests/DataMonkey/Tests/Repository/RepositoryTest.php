@@ -72,9 +72,12 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testFetchBy($entity)
     {
-        $export = $entity->export();
-        $primary_key = $entity->getPrimaryKey();
-        $criteria = array($primary_key=>$export[$primary_key]);
+        $export       = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
+
         $this->assertGreaterThan(0,count($this->_repository->fetchBy($criteria)));
     }
 
@@ -84,9 +87,11 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testFetchOneBy($entity)
     {
-        $export = $entity->export();
-        $primary_key = $entity->getPrimaryKey();
-        $criteria = array($primary_key=>$export[$primary_key]);
+        $export       = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
 
         $entity = $this->_repository->fetchOneBy($criteria);
 
