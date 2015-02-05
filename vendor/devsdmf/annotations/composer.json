@@ -1,0 +1,24 @@
+{
+    "name": "devsdmf/annotations",
+    "description": "A simple and directly handler for docblock and annotations for PHP ",
+    "keywords": ["devsdmf","annotations","docblock","parser"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucas Mendes de Freitas",
+            "email": "devsdmf@gmail.com"
+        }
+    ],
+    "require":{
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit\/phpunit": "4.2.*",
+        "fabpot/php-cs-fixer": "0.5.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
