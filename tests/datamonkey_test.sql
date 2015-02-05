@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `datamonkey_test` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `datamonkey_test`;
--- MySQL dump 10.13  Distrib 5.6.19, for osx10.7 (i386)
+-- MySQL dump 10.13  Distrib 5.6.22, for osx10.8 (x86_64)
 --
 -- Host: localhost    Database: datamonkey_test
 -- ------------------------------------------------------
--- Server version	5.6.21
+-- Server version	5.6.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `test_table` (
   `column1` varchar(45) DEFAULT NULL,
   `column2` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idtest_table`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,30 @@ CREATE TABLE `test_table` (
 LOCK TABLES `test_table` WRITE;
 /*!40000 ALTER TABLE `test_table` DISABLE KEYS */;
 /*!40000 ALTER TABLE `test_table` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test_table2`
+--
+
+DROP TABLE IF EXISTS `test_table2`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_table2` (
+  `key1` int(11) NOT NULL,
+  `key2` int(11) NOT NULL,
+  `column` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`key1`,`key2`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_table2`
+--
+
+LOCK TABLES `test_table2` WRITE;
+/*!40000 ALTER TABLE `test_table2` DISABLE KEYS */;
+/*!40000 ALTER TABLE `test_table2` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +74,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-22 21:18:11
+-- Dump completed on 2015-02-05 15:33:10
