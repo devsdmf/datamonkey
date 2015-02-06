@@ -1,5 +1,7 @@
 # ![logo](https://i.imgur.com/TYpSNO7.png) DataMonkey
 
+[![Join the chat at https://gitter.im/devsdmf/datamonkey](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/devsdmf/datamonkey?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/devsdmf/datamonkey.svg?branch=master)](https://travis-ci.org/devsdmf/datamonkey)
 [![Latest Stable Version](https://poser.pugx.org/devsdmf/datamonkey/v/stable.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Total Downloads](https://poser.pugx.org/devsdmf/datamonkey/downloads.svg)](https://packagist.org/packages/devsdmf/datamonkey)
