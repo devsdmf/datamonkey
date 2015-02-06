@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/devsdmf/datamonkey.svg?branch=master)](https://travis-ci.org/devsdmf/datamonkey)
 [![Latest Stable Version](https://poser.pugx.org/devsdmf/datamonkey/v/stable.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Total Downloads](https://poser.pugx.org/devsdmf/datamonkey/downloads.svg)](https://packagist.org/packages/devsdmf/datamonkey)
+[![Documentation Status](https://readthedocs.org/projects/datamonkey/badge/?version=latest)](https://readthedocs.org/projects/datamonkey/?badge=latest)
 [![License](https://poser.pugx.org/devsdmf/datamonkey/license.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 
 A simple database ORM for PHP projects build on top of Doctrine.
