@@ -7,3 +7,6 @@ php:
 before_script:
   - composer install --dev
   - mysql -u root < tests/datamonkey_test.sql
+
+after_success:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
