@@ -99,7 +99,8 @@ Done!
 Documentation
 -------------
 
-Checkout the API documentation [here](https://devsdmf.github.io/datamonkey)
+* [Developers Guide](http://datamonkey.readthedocs.org/en/latest/)
+* [API Documentation](https://devsdmf.github.io/datamonkey)
 
 Tests
 -----

@@ -1,0 +1,12 @@
+site_name: DataMonkey
+pages:
+- [index.md, Home]
+- [getting-started.md, Getting Started]
+- [installation.md, Installation]
+- [annotations.md, Annotations]
+- [entities.md, Entities]
+- [factories.md, Factories]
+- [repositories.md, Repositories]
+- [contributing.md, Contributing]
+- [license.md, License]
+theme: readthedocs
