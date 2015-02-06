@@ -1,6 +1,7 @@
 # ![logo](https://i.imgur.com/TYpSNO7.png) DataMonkey
 
 [![Build Status](https://travis-ci.org/devsdmf/datamonkey.svg?branch=master)](https://travis-ci.org/devsdmf/datamonkey)
+[![Coverage Status](https://coveralls.io/repos/devsdmf/datamonkey/badge.svg)](https://coveralls.io/r/devsdmf/datamonkey)
 [![Latest Stable Version](https://poser.pugx.org/devsdmf/datamonkey/v/stable.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Total Downloads](https://poser.pugx.org/devsdmf/datamonkey/downloads.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Documentation Status](https://readthedocs.org/projects/datamonkey/badge/?version=latest)](https://readthedocs.org/projects/datamonkey/?badge=latest)
