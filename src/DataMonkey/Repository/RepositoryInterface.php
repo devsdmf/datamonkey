@@ -14,6 +14,17 @@ use DataMonkey\Entity\ExportableEntity;
 interface RepositoryInterface
 {
     /**
+     * Fetch objects from database
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param integer $limit
+     * @param integer $offset
+     * @return \DataMonkey\Repository\ResultStack
+     */
+    public function fetch(array $criteria = null, array $orderBy = null, $limit = null, $offset = null);
+
+    /**
      * Fetch all records from database
      *
      * @return \DataMonkey\Repository\ResultStack
