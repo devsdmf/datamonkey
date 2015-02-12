@@ -117,6 +117,18 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @depends testInsert
+     * @param SampleEntity $entity
+     */
+    public function testFetchUsingEntity($entity)
+    {
+        $mock_entity = new SampleEntity();
+        $mock_entity->column = $entity->column;
+
+        $this->assertGreaterThan(0,count($this->_repository->fetch($mock_entity)));
+    }
+
+    /**
      * @depends testInitialize
      * @expectedException \DataMonkey\Repository\Exception\InvalidArgumentException
      */

@@ -41,8 +41,16 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function fetch(array $criteria = null, array $orderBy = null, $limit = null, $offset = null)
+    public function fetch($criteria = null, array $orderBy = null, $limit = null, $offset = null)
     {
+        if (!is_null($criteria) && !$criteria instanceof ExportableEntity && !is_array($criteria)) {
+            throw new InvalidArgumentException('The criteria must be an array or an object instance that implements the ExportableEntity interface');
+        }
+
+        if ($criteria instanceof ExportableEntity) {
+            $criteria = array_filter($criteria->export());
+        }
+
         $data = array();
 
         // Preparing where statement
@@ -123,7 +131,7 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchOneBy(array $criteria)
+    public function fetchOneBy($criteria)
     {
         $result = $this->fetch($criteria, null, 1);
         $result->rewind();
