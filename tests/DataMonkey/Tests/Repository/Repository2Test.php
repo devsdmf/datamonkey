@@ -50,11 +50,25 @@ class Repository2Test extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleRepository2',$this->_repository);
     }
 
+    /**
+     * @depends testInitialize
+     * @return ExportableEntity
+     */
     public function testInsert()
     {
         $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleEntity2',$this->_repository->save($this->_entity));
 
         return $this->_entity;
+    }
+
+    /**
+     * @depends testInitialize
+     * @expectedException \DataMonkey\Repository\Exception\InvalidPrimaryKeyException
+     */
+    public function testInsertFailEmptyPrimaryKey()
+    {
+        $entity = new SampleEntity2();
+        $this->_repository->save($entity);
     }
 
     /**

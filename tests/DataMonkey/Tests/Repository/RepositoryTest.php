@@ -50,6 +50,10 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleRepository',$this->_repository);
     }
 
+    /**
+     * @depends testInitialize
+     * @return ExportableEntity
+     */
     public function testInsert()
     {
         $this->_repository->save($this->_entity);
@@ -85,6 +89,46 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      * @depends testInsert
      * @param SampleEntity $entity
      */
+    public function testFetchByOrdering($entity)
+    {
+        $export       = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
+        $order        = array($primary_key=>'ASC');
+
+        $this->assertGreaterThan(0,count($this->_repository->fetchBy($criteria,$order)));
+    }
+
+    /**
+     * @depends testInsert
+     * @param SampleEntity $entity
+     */
+    public function testFetchByWithLimit($entity)
+    {
+        $export       = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
+
+        $this->assertEquals(1,count($this->_repository->fetchBy($criteria,null,1)));
+    }
+
+    /**
+     * @depends testInitialize
+     * @expectedException \DataMonkey\Repository\Exception\InvalidArgumentException
+     */
+    public function testFetchByFailWhenCriteriaIsEmpty()
+    {
+        $this->_repository->fetchBy(array());
+    }
+
+    /**
+     * @depends testInsert
+     * @param SampleEntity $entity
+     */
     public function testFetchOneBy($entity)
     {
         $export       = $entity->export();
@@ -100,10 +144,65 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testInsert
+     * @depends testFetchOneBy
+     * @param SampleEntity $entity
+     */
+    public function testUpdate($entity)
+    {
+        $entity->column = 'Updated value';
+
+        $this->assertInstanceOf('\DataMonkey\Tests\Mocks\SampleEntity',$this->_repository->save($entity));
+
+        $export       = $entity->export();
+        $primary_keys = $entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
+
+        $entity = $this->_repository->fetchOneBy($criteria);
+
+        $this->assertEquals('Updated value',$entity->column);
+    }
+
+    /**
+     * @depends testInsert
      * @param SampleEntity $entity
      */
     public function testDelete($entity)
     {
         $this->assertTrue($this->_repository->delete($entity));
+    }
+
+    /**
+     * @depends testInsert
+     * @depends testDelete
+     * @param SampleEntity $entity
+     */
+    public function testDeleteFail($entity)
+    {
+        $this->assertFalse($this->_repository->delete($entity));
+    }
+
+    /**
+     * @depends testInitialize
+     * @depends testInsert
+     * @depends testDelete
+     */
+    public function testFetchByWithLimitOffset()
+    {
+        $entity        = SampleEntity::fromArray($this->_entity_data);
+        $second_entity = SampleEntity::fromArray($this->_entity_data);
+        $this->_repository->save($entity);
+        $this->_repository->save($second_entity);
+
+        $export       = $second_entity->export();
+        $primary_keys = $second_entity->getPrimaryKeys();
+        $primary_key  = $primary_keys[0]['key'];
+        $value        = $export[$primary_key];
+        $criteria     = array($primary_key=>$value);
+
+        $this->assertEquals(1,count($this->_repository->fetchBy($criteria,null,1,0)));
+        $this->_repository->delete($entity);
+        $this->_repository->delete($second_entity);
     }
 }
