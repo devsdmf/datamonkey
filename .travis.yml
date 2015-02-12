@@ -8,5 +8,8 @@ before_script:
   - composer install --dev
   - mysql -u root < tests/datamonkey_test.sql
 
+script:
+  - phpunit --coverage-clover tests/coverage-clover.xml
+
 after_success:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+  - '[ "$TRAVIS_PHP_VERSION" != "hhvm" ] && vendor/bin/coveralls -v'
