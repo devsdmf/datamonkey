@@ -16,13 +16,13 @@ interface RepositoryInterface
     /**
      * Fetch objects from database
      *
-     * @param array $criteria
-     * @param array $orderBy
-     * @param integer $limit
-     * @param integer $offset
+     * @param array|ExportableEntity $criteria
+     * @param array                  $orderBy
+     * @param integer                $limit
+     * @param integer                $offset
      * @return \DataMonkey\Repository\ResultStack
      */
-    public function fetch(array $criteria = null, array $orderBy = null, $limit = null, $offset = null);
+    public function fetch($criteria = null, array $orderBy = null, $limit = null, $offset = null);
 
     /**
      * Fetch all records from database
@@ -34,10 +34,10 @@ interface RepositoryInterface
     /**
      * Fetch objects by a set of criteria
      *
-     * @param  array                              $criteria
-     * @param  array                              $orderBy
-     * @param  integer                            $limit
-     * @param  integer                            $offset
+     * @param  array   $criteria
+     * @param  array   $orderBy
+     * @param  integer $limit
+     * @param  integer $offset
      * @return \DataMonkey\Repository\ResultStack
      */
     public function fetchBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
@@ -45,10 +45,10 @@ interface RepositoryInterface
     /**
      * Fetch a single object by a set of criteria
      *
-     * @param  array            $criteria
+     * @param  array|ExportableEntity $criteria
      * @return ExportableEntity
      */
-    public function fetchOneBy(array $criteria);
+    public function fetchOneBy($criteria);
 
     /**
      * Persist an object in database
