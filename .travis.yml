@@ -3,10 +3,14 @@ language: php
 php:
   - 5.4
   - 5.5
+  - 5.6
+
+env:
+  - TRAVIS_ENV=1
 
 before_script:
   - composer install --dev
-  - mysql -u root < tests/datamonkey_test.sql
+  - mysql -u root < tests/schema.sql
 
 script:
   - phpunit --coverage-clover tests/coverage-clover.xml

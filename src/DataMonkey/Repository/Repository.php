@@ -41,38 +41,29 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchAll()
+    public function fetch($criteria = null, array $orderBy = null, $limit = null, $offset = null)
     {
-        $query = 'SELECT * FROM `' . $this->_name . '`';
-        $result = $this->_connection->fetchAll($query);
-
-        $stack = new ResultStack();
-
-        foreach ($result as $row) {
-            $stack->attach($this->_factory->create($row));
+        if (!is_null($criteria) && !$criteria instanceof ExportableEntity && !is_array($criteria)) {
+            throw new InvalidArgumentException('The criteria must be an array or an object instance that implements the ExportableEntity interface');
         }
 
-        return $stack;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
-    {
-        if (count($criteria) == 0 || is_null($criteria)) {
-            throw new InvalidArgumentException(sprintf('You must set an criteria when using fetchBy method'));
+        if ($criteria instanceof ExportableEntity) {
+            $criteria = array_filter($criteria->export());
         }
 
-        $fields = array();
         $data = array();
 
-        // Preparing fields and data
-        foreach ($criteria as $field => $value) {
-            $fields[] = '`' . $field . '`=?';
-            $data[] = $value;
+        // Preparing where statement
+        if (!is_null($criteria) && count($criteria) > 0) {
+            $fields = array();
+
+            foreach ($criteria as $field => $value) {
+                $fields[] = '`' . $field . '`=?';
+                $data[] = $value;
+            }
+
+            $where_statement = ' WHERE ' . implode(' AND ', $fields);
         }
-        $field_string = implode(' AND ', $fields);
 
         // Preparing order statement
         if (!is_null($orderBy) && count($orderBy) > 0) {
@@ -80,20 +71,32 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
             foreach ($orderBy as $field => $sort) {
                 $order[] = $field . ' ' . $sort;
             }
-            $order_string = ' ORDER BY ' . implode(', ', $order);
+            $order_statement = ' ORDER BY ' . implode(', ', $order);
         }
 
         // Preparing limit statement
         if (!is_null($limit)) {
-            $limit_string = ' LIMIT ';
+            $limit_statement = ' LIMIT ';
             if (is_null($offset)) {
-                $limit_string .= $limit;
+                $limit_statement .= $limit;
             } else {
-                $limit_string .= $offset . ',' . $limit;
+                $limit_statement .= $offset . ',' . $limit;
             }
         }
 
-        $query = 'SELECT * FROM `' . $this->_name . '` WHERE ' . $field_string . ((isset($order_string)) ? $order_string : '') . ((isset($limit_string)) ? $limit_string : '');
+        $query = 'SELECT * FROM `' . $this->_name . '`';
+
+        if (isset($where_statement)) {
+            $query .= $where_statement;
+        }
+
+        if (isset($order_statement)) {
+            $query .= $order_statement;
+        }
+
+        if (isset($limit_statement)) {
+            $query .= $limit_statement;
+        }
 
         $result = $this->_connection->fetchAll($query, $data);
         $stack = new ResultStack();
@@ -108,9 +111,29 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchOneBy(array $criteria)
+    public function fetchAll()
     {
-        $result = $this->fetchBy($criteria, null, 1);
+        return $this->fetch();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        if (count($criteria) == 0 || is_null($criteria)) {
+            throw new InvalidArgumentException(sprintf('You must set an criteria when using fetchBy method'));
+        }
+
+        return $this->fetch($criteria,$orderBy,$limit,$offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchOneBy($criteria)
+    {
+        $result = $this->fetch($criteria, null, 1);
         $result->rewind();
 
         if ($result->count() == 1) {

@@ -1,8 +1,8 @@
 site_name: DataMonkey
 pages:
 - [index.md, Home]
-- [getting-started.md, Getting Started]
 - [installation.md, Installation]
+- [getting-started.md, Getting Started]
 - [annotations.md, Annotations]
 - [entities.md, Entities]
 - [factories.md, Factories]

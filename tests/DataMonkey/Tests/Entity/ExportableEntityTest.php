@@ -3,6 +3,8 @@
 namespace DataMonkey\Tests\Entity;
 
 use DataMonkey\Entity\ExportAbstract;
+use DataMonkey\Tests\Mocks\InvalidEntityWithInvalidStrategy;
+use DataMonkey\Tests\Mocks\InvalidEntityWithoutPrimaryKey;
 use DataMonkey\Tests\Mocks\SampleEntity;
 
 class ExportableEntityTest extends \PHPUnit_Framework_TestCase
@@ -52,9 +54,27 @@ class ExportableEntityTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @expectedException \DataMonkey\Entity\Exception\InvalidStrategyException
+     */
+    public function testGetMappingFailInvalidStrategy()
+    {
+        $entity = new InvalidEntityWithInvalidStrategy();
+        $entity->getMapping();
+    }
+
     public function testGetPrimaryKey()
     {
         $this->assertEquals($this->_primary_key,$this->_entity->getPrimaryKeys());
+    }
+
+    /**
+     * @expectedException \DataMonkey\Entity\Exception\InvalidEntityException
+     */
+    public function testGetPrimaryKeyFailWithoutPrimaryKey()
+    {
+        $entity = new InvalidEntityWithoutPrimaryKey();
+        $entity->getPrimaryKeys();
     }
 
     public function testExchangeArray()
