@@ -5,6 +5,9 @@ php:
   - 5.5
   - 5.6
 
+env:
+  - TRAVIS_ENV=1
+
 before_script:
   - composer install --dev
   - mysql -u root < tests/schema.sql
