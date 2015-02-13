@@ -18,8 +18,10 @@ more maintainable code and a lot of other things.
 
 ## How to use DataMonkey correctly ?
 
-Before start using the DataMonkey ORM, you need to learn how to instantiate an Doctrine DBAL Connection object, 
-to do this, I recommend you to read this [quick guide](http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#getting-a-connection) in Doctrine documentation.
+Before start this guide, you'll need to install the DataMonkey in your project, then, if you haven't did it or don't 
+know how do this, see the [installation guide](installation.md), and you need know too how to instantiate an Doctrine DBAL 
+Connection object, to do this, I recommend you to read this [quick guide](http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#getting-a-connection) 
+in the Doctrine documentation.
 
 > Doctrine DBAL is already included in DataMonkey package.
 
@@ -120,6 +122,6 @@ $repo->save($entity);
 ```
 
 Alright! You finished the getting started guide, now you're able to use the DataMonkey in your projects, for an more
-advanced usage, check the sections below.
+advanced usage, check the next sections.
 
 Enjoy!
