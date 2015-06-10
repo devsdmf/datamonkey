@@ -23,7 +23,7 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
     /**
      * @var AbstractFactory
      */
-    private $_factory = null;
+    protected $_factory = null;
 
     /**
      * The Constructor
