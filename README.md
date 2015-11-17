@@ -15,11 +15,7 @@ Installation
 ------------
 
 ```json
-{
-    "require": {
-        "devsdmf/datamonkey":"~1.0"
-    }
-}
+$ composer require devsdmf/datamonkey
 ```
 
 Usage

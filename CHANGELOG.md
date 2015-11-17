@@ -1,4 +1,8 @@
 # CHANGELOG
+- `1.1.2`
+    * Fixed entity mapping bug that causes to mapper index properties without @db_ref annotation
+- `1.1.1`
+    * Changed the factory property visibility in Repository class
 - `1.1.0`
     * Implemented fetch method to search for large data sets in database without requires an criteria
     * Added support to fetch entities using an entity instance
