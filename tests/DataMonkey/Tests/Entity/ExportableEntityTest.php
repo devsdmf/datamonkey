@@ -99,7 +99,9 @@ class ExportableEntityTest extends \PHPUnit_Framework_TestCase
     {
         $data = $entity->toArray();
         foreach ($data as $key => $value) {
-            $this->assertEquals($this->_data[$key],$value);
+            if (isset($this->_data[$key])) {
+                $this->assertEquals($this->_data[$key],$value);
+            }
         }
     }
 
@@ -122,7 +124,9 @@ class ExportableEntityTest extends \PHPUnit_Framework_TestCase
 
         $data = $entity->toArray();
         foreach ($data as $key => $value) {
-            $this->assertEquals($this->_data[$key],$value);
+            if (isset($this->_data[$key])) {
+                $this->assertEquals($this->_data[$key],$value);
+            }
         }
     }
 
