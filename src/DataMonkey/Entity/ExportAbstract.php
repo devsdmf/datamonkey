@@ -41,17 +41,19 @@ abstract class ExportAbstract implements ExportableEntity
             foreach ($reflector->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
                 $annotations = $reader->getPropertyAnnotations($property);
 
-                $db_ref = (!is_null($annotations->db_ref)) ? $annotations->db_ref : $property->getName();
-                $this->_mapping[$property->getName()] = (string) $db_ref;
+                if (!is_null($annotations->db_ref)) {
+                    $db_ref = $annotations->db_ref;
+                    $this->_mapping[$property->getName()] = (string) $db_ref;
 
-                if (isset($annotations->pk)) {
-                    $key      = (string) $db_ref;
-                    $strategy = (isset($annotations->strategy)) ? (string) $annotations->strategy : 'auto';
+                    if (isset($annotations->pk)) {
+                        $key      = (string) $db_ref;
+                        $strategy = (isset($annotations->strategy)) ? (string) $annotations->strategy : 'auto';
 
-                    if ($strategy != 'auto' && $strategy != 'manual')
-                        throw new InvalidStrategyException(sprintf('The primary key strategy must be auto or manual'));
+                        if ($strategy != 'auto' && $strategy != 'manual')
+                            throw new InvalidStrategyException(sprintf('The primary key strategy must be auto or manual'));
 
-                    $this->_primary_keys[] = array('key'=>$key,'strategy'=>$strategy);
+                        $this->_primary_keys[] = array('key'=>$key,'strategy'=>$strategy);
+                    }
                 }
             }
         }
@@ -112,6 +114,7 @@ abstract class ExportAbstract implements ExportableEntity
      */
     public function toArray()
     {
+        $this->getMapping();
         $reflector = new \ReflectionClass($this);
         $data = array();
 
@@ -132,7 +135,9 @@ abstract class ExportAbstract implements ExportableEntity
         $data = $this->toArray();
 
         foreach ($data as $property => $value) {
-            $export[$mapping[$property]] = $value;
+            if (array_key_exists($property,$mapping)) {
+                $export[$mapping[$property]] = $value;
+            }
         }
 
         return $export;
