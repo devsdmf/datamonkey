@@ -24,4 +24,9 @@ class SampleEntity extends ExportAbstract implements ExportableEntity
      * @db_ref column2
      */
     public $random = 0;
+
+    /**
+     * @var void
+     */
+    public $notIndexedColumn;
 }
