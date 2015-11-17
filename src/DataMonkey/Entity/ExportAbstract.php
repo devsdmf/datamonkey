@@ -41,7 +41,7 @@ abstract class ExportAbstract implements ExportableEntity
             foreach ($reflector->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
                 $annotations = $reader->getPropertyAnnotations($property);
 
-                if (!is_null($annotations->db_ref)) {
+                if (isset($annotations->db_ref)) {
                     $db_ref = $annotations->db_ref;
                     $this->_mapping[$property->getName()] = (string) $db_ref;
 
