@@ -75,12 +75,12 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
         }
 
         // Preparing limit statement
-        if (!is_null($limit)) {
+        if (!is_null($limit) && (int) $limit > 0) {
             $limit_statement = ' LIMIT ';
-            if (is_null($offset)) {
-                $limit_statement .= $limit;
+            if (!is_null($offset) && (int) $offset > 0) {
+                $limit_statement .= (int) $offset . ',' . $limit;
             } else {
-                $limit_statement .= $offset . ',' . $limit;
+                $limit_statement .= (int) $limit;
             }
         }
 
