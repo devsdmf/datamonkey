@@ -1,4 +1,6 @@
 # CHANGELOG
+- `1.1.3`
+    * Fixed a bug when a limit and/or offset parameters in fetch method is not a literal integer
 - `1.1.2`
     * Fixed entity mapping bug that causes to mapper index properties without @db_ref annotation
 - `1.1.1`
