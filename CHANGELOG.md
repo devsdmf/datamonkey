@@ -1,4 +1,6 @@
 # CHANGELOG
+- `1.1.4`
+    * Changed connection parameter to receive an instance instead of a reference
 - `1.1.3`
     * Fixed a bug when a limit and/or offset parameters in fetch method is not a literal integer
 - `1.1.2`

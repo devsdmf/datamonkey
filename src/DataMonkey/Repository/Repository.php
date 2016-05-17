@@ -32,7 +32,7 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
      * @param  AbstractFactory                    $factory
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function __construct(Connection &$connection, AbstractFactory $factory)
+    public function __construct(Connection $connection, AbstractFactory $factory)
     {
         parent::__construct($connection);
         $this->_factory = $factory;
