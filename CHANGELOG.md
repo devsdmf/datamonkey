@@ -1,4 +1,7 @@
 # CHANGELOG
+- `1.2.0`
+    * Changed minimum php version from 5.4 to 5.5
+    * Updated project dependencies
 - `1.1.4`
     * Changed connection parameter to receive an instance instead of a reference
 - `1.1.3`
