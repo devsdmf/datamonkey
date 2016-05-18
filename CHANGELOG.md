@@ -1,4 +1,6 @@
 # CHANGELOG
+- `1.2.1`
+    * Fixed coveralls api spec
 - `1.2.0`
     * Changed minimum php version from 5.4 to 5.5
     * Updated project dependencies
