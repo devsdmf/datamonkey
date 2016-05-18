@@ -3,7 +3,7 @@
 [![Join the chat at https://gitter.im/devsdmf/datamonkey](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/devsdmf/datamonkey?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build Status](https://travis-ci.org/devsdmf/datamonkey.svg?branch=master)](https://travis-ci.org/devsdmf/datamonkey)
-[![Coverage Status](https://coveralls.io/repos/devsdmf/datamonkey/badge.svg)](https://coveralls.io/r/devsdmf/datamonkey)
+[![Coverage Status](https://coveralls.io/repos/github/devsdmf/datamonkey/badge.svg?branch=master)](https://coveralls.io/github/devsdmf/datamonkey?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/devsdmf/datamonkey/v/stable.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Total Downloads](https://poser.pugx.org/devsdmf/datamonkey/downloads.svg)](https://packagist.org/packages/devsdmf/datamonkey)
 [![Documentation Status](https://readthedocs.org/projects/datamonkey/badge/?version=latest)](https://readthedocs.org/projects/datamonkey/?badge=latest)
