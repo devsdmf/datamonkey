@@ -1,3 +1,2 @@
-src_dir: src/DataMonkey
 coverage_clover: tests/coverage-clover.xml
 json_path: tests/coverage-coveralls.json
