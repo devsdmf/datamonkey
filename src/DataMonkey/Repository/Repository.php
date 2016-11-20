@@ -235,7 +235,7 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
             if ($result == 1) {
                 return $entity;
             } elseif ($result == 0) {
-                throw new TransactionException(sprintf('No affected row'));
+                return $entity;
             } else {
                 throw new TransactionException(sprintf('An error occurred at update %s table', $this->_name));
             }
