@@ -1,4 +1,9 @@
 # CHANGELOG
+
+- `1.2.3`
+    * Fixed auto primary key in entities with manual strategy primary key
+- `1.2.2`
+    * Changed Repository's save method behavior to return the entity in no affected row update instead of throw a TransactionException
 - `1.2.1`
     * Fixed coveralls api spec
 - `1.2.0`
