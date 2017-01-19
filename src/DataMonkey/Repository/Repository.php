@@ -201,10 +201,13 @@ class Repository extends TableGatewayAbstract implements RepositoryInterface
 
             $result = $this->_connection->executeUpdate($query, $data);
 
-            if ($result == 1) {
-                if (count($primary_keys) == 1) {
-                    $id_entity = $this->_connection->lastInsertId();
-                    $entity->exchangeArray(array($primary_keys[0]['key'] => $id_entity), true);
+           if ($result == 1) {
+                $id_entity = $this->_connection->lastInsertId();
+
+                foreach ($primary_keys as $primary_key) {
+                    if ($primary_key['strategy'] == 'auto') {
+                        $entity->exchangeArray(array($primary_key['key'] => $id_entity), true);
+                    }
                 }
 
                 return $entity;
